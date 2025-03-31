@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Sistema Muscular</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe6f2;
+            color: #d63384;
+            text-align: center;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        button {
+            background-color: #d63384;
+            color: white;
+            font-size: 24px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #a02463;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="quiz-container">
+        <h1>Bem-vindo ao Quiz do Sistema Muscular</h1>
+        <button onclick="startQuiz()">Iniciar Quiz</button>
+    </div>
+    <script>
+        const questions = [
+            { question: "Qual a função principal do músculo esquelético?", options: ["Produção de calor", "Movimento", "Proteção de órgãos", "Armazenamento de energia"], answer: 1 },
+            { question: "Qual músculo é responsável pelo movimento voluntário?", options: ["Músculo liso", "Músculo cardíaco", "Músculo esquelético", "Músculo flexor"], answer: 2 },
+            { question: "Qual tecido muscular é encontrado no coração?", options: ["Liso", "Esquelético", "Cardíaco", "Voluntário"], answer: 2 },
+            { question: "Qual mineral é essencial para a contração muscular?", options: ["Ferro", "Cálcio", "Potássio", "Sódio"], answer: 1 },
+            { question: "Qual neurotransmissor está envolvido na contração muscular?", options: ["Dopamina", "Serotonina", "Acetilcolina", "Adrenalina"], answer: 2 },
+            { question: "Os músculos são conectados aos ossos por meio de qual estrutura?", options: ["Ligamentos", "Tendões", "Cartilagens", "Membranas"], answer: 1 },
+            { question: "O que é o sarcômero?", options: ["Unidade funcional do músculo esquelético", "Fibras musculares", "Células do músculo cardíaco", "Estrutura do músculo liso"], answer: 0 },
+            { question: "Qual tipo de músculo é responsável pelo movimento involuntário?", options: ["Músculo esquelético", "Músculo cardíaco", "Músculo liso", "Músculo flexor"], answer: 2 },
+            { question: "Qual é a principal função do músculo cardíaco?", options: ["Mover os ossos", "Bombear sangue", "Realizar movimentos voluntários", "Gerar calor"], answer: 1 },
+            { question: "Quais músculos controlam o movimento da respiração?", options: ["Diafragma e intercostais", "Bíceps e tríceps", "Quadríceps e hamstrings", "Gêmeos e glúteos"], answer: 0 },
+            { question: "Qual músculo está localizado na parte frontal da coxa?", options: ["Quadríceps", "Bíceps femoral", "Gêmeos", "Sartorius"], answer: 0 },
+            { question: "Os músculos lisos são encontrados em quais locais?", options: ["Coração e vasos sanguíneos", "Órgãos internos", "Esqueleto", "Apenas no coração"], answer: 1 },
+            { question: "Qual tipo de contração muscular é responsável pelo aumento do comprimento do músculo?", options: ["Isométrica", "Concêntrica", "Excêntrica", "Auxiliar"], answer: 2 },
+            { question: "Qual músculo é responsável por levantar a perna durante a caminhada?", options: ["Glúteo máximo", "Bíceps femoral", "Iliopsoas", "Quadríceps"], answer: 2 },
+            { question: "Onde ocorre o processo de contração muscular no nível celular?", options: ["Nas fibras musculares", "No sarcômero", "Nas mitocôndrias", "Nos tendões"], answer: 1 },
+            { question: "Qual é a principal função das fibras musculares de contração rápida?", options: ["Geração de força de longa duração", "Geração de força explosiva", "Realização de movimentos lentos", "Controle da postura"], answer: 1 },
+            { question: "Os músculos esqueléticos são voluntários ou involuntários?", options: ["Voluntários", "Involuntários", "Ambos", "Nenhum"], answer: 0 },
+            { question: "Qual parte do sistema nervoso controla a contração muscular?", options: ["Sistema nervoso autônomo", "Sistema nervoso central", "Sistema nervoso periférico", "Sistema nervoso somático"], answer: 3 },
+            { question: "Qual é o efeito do exercício físico no tecido muscular?", options: ["Atrofia muscular", "Hipertrofia muscular", "Redução da força", "Diminuição da resistência"], answer: 1 },
+            { question: "O que acontece quando a quantidade de oxigênio no músculo é insuficiente?", options: ["A produção de ATP aumenta", "A produção de ácido lático aumenta", "Os músculos relaxam", "Não ocorre alteração"], answer: 1 },
+            { question: "Qual é o nome da proteína que facilita a contração muscular?", options: ["Actina", "Troponina", "Miosina", "Calmodulina"], answer: 2 },
+            { question: "O que é o potencial de ação muscular?", options: ["A capacidade de o músculo se contrair", "O movimento de eletricidade nos músculos", "O estímulo que dispara a contração muscular", "A quantidade de oxigênio no músculo"], answer: 2 },
+            { question: "Qual músculo é responsável pela flexão do braço?", options: ["Tríceps", "Bíceps", "Braquiorradial", "Deltoide"], answer: 1 },
+            { question: "O que acontece com o músculo esquelético durante o descanso?", options: ["O músculo continua contraído", "O músculo relaxa e se recupera", "O músculo se atrofia", "Não ocorre nenhuma mudança"], answer: 1 },
+            { question: "Qual é o papel do cálcio na contração muscular?", options: ["Desencadeia a liberação de energia", "Ativa as proteínas contráteis", "Inibe a contração muscular", "Interage com o ATP"], answer: 1 },
+            { question: "Qual dos seguintes músculos não é voluntário?", options: ["Músculo esquelético", "Músculo cardíaco", "Músculo liso", "Nenhum"], answer: 1 },
+            { question: "Qual é o principal combustível utilizado pelo músculo durante o exercício de alta intensidade?", options: ["Gordura", "Proteína", "Carboidrato", "Ácido láctico"], answer: 2 },
+            { question: "O que é a fadiga muscular?", options: ["Aumento da força", "Incapacidade do músculo de contrair efetivamente", "Aumento da resistência", "Descanso do músculo"], answer: 1 },
+            { question: "O que são as fibras musculares do tipo I?", options: ["Fibras rápidas", "Fibras lentas", "Fibras resistentes", "Fibras que geram mais força"], answer: 1 },
+            { question: "Qual parte do músculo esquelético está mais envolvida com o movimento?", options: ["Epimísio", "Perimísio", "Endomísio", "Fibras musculares"], answer: 3 },
+            { question: "O que são tendões?", options: ["Estruturas que conectam músculos aos ossos", "Estruturas que conectam músculos a músculos", "Órgãos que geram movimento", "Fibras que ajudam na elasticidade muscular"], answer: 0 },
+            { question: "O que é o trote e como ele afeta os músculos?", options: ["Uma atividade aeróbica que fortalece os músculos", "Uma atividade anaeróbica que provoca contrações intensas", "Uma atividade de baixo impacto que não afeta os músculos", "Uma atividade de alongamento muscular"], answer: 0 },
+            { question: "O que é a hipertrofia muscular?", options: ["O aumento do tamanho das fibras musculares", "A diminuição da força muscular", "O aumento da flexibilidade", "O aumento da resistência aeróbica"], answer: 0 },
+            { question: "Qual é a principal função do músculo esternocleidomastoideo?", options: ["Flexão do pescoço", "Rotação da cabeça", "Levantar os ombros", "Fazer movimentos laterais"], answer: 1 },
+            { question: "Qual é a principal função do músculo trapézio?", options: ["Movimento da cabeça", "Movimento dos ombros", "Movimento do cotovelo", "Movimento das pernas"], answer: 1 },
+            { question: "Qual tipo de músculo tem a maior capacidade de regeneração?", options: ["Músculo esquelético", "Músculo cardíaco", "Músculo liso", "Músculo esquelético com lesões frequentes"], answer: 2 },
+            { question: "O que ocorre durante a contração concêntrica?", options: ["O músculo se alonga", "O músculo encurta", "Não há alteração no comprimento", "A força do músculo diminui"], answer: 1 },
+            { question: "Qual é a principal função do músculo do bíceps?", options: ["Flexão do ombro", "Flexão do cotovelo", "Rotação do braço", "Extensão do cotovelo"], answer: 1 },
+            { question: "Qual músculo é responsável pela rotação do quadril?", options: ["Glúteo médio", "Iliopsoas", "Sartorius", "Piriforme"], answer: 3 },
+            { question: "Qual músculo é mais ativo durante a corrida?", options: ["Quadríceps", "Solear", "Glúteos", "Gêmeos"], answer: 0 },
+            { question: "O que são fibras musculares do tipo II?", options: ["Fibras de contração lenta", "Fibras de contração rápida", "Fibras resistentes", "Fibras de alta flexibilidade"], answer: 1 },
+            { question: "Como o músculo liso contribui para a digestão?", options: ["Aumentando a pressão abdominal", "Contraindo para mover alimentos ao longo do trato digestivo", "Produzindo enzimas digestivas", "Aumentando a absorção de nutrientes"], answer: 1 },
+            { question: "Quais músculos ajudam no processo de respiração?", options: ["Diafragma e intercostais", "Bíceps", "Glúteos", "Quadríceps"], answer: 0 }
+        ];
+        
+        let currentQuestionIndex = 0;
+        let score = 0;
+        
+        function startQuiz() {
+            showQuestion();
+        }
+        
+        function showQuestion() {
+            const questionElement = document.createElement('div');
+            questionElement.innerHTML = `<h2>${questions[currentQuestionIndex].question}</h2>`;
+            questions[currentQuestionIndex].options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.onclick = () => checkAnswer(index);
+                questionElement.appendChild(button);
+            });
+            document.getElementById('quiz-container').innerHTML = '';
+            document.getElementById('quiz-container').appendChild(questionElement);
+        }
+        
+        function checkAnswer(selectedIndex) {
+            if (selectedIndex === questions[currentQuestionIndex].answer) {
+                score++;
+            }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        function showResults() {
+            document.getElementById('quiz-container').innerHTML = `<h2>Você acertou ${score} de ${questions.length} perguntas!</h2>`;
+        }
+    </script>
+</body>
+</html>
