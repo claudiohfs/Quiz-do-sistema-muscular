@@ -74,13 +74,27 @@
             list-style-type: none;
             padding: 0;
         }
+        #music-button {
+            background-color: #6c757d;
+        }
+        #music-button:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
     <div class="container" id="quiz-container">
         <h1>Bem-vindo ao Quiz do Sistema Muscular</h1>
         <button onclick="startQuiz()">Iniciar Quiz</button>
+        <button id="music-button" onclick="toggleMusic()">Ativar Música de Fundo</button>
     </div>
+
+    <!-- Música de fundo -->
+    <audio id="background-music" loop>
+        <source src="somdefundo.mp3" type="audio/mp3">
+        Seu navegador não suporta o formato de áudio.
+    </audio>
+
     <script>
         const questions = [
             { question: "Qual a função principal do músculo esquelético?", options: ["Produção de calor", "Movimento", "Proteção de órgãos", "Armazenamento de energia"], answer: 1 },
@@ -127,18 +141,21 @@
             { question: "Como o músculo liso contribui para a digestão?", options: ["Aumentando a pressão abdominal", "Contraindo para mover alimentos ao longo do trato digestivo", "Produzindo enzimas digestivas", "Aumentando a absorção de nutrientes"], answer: 1 },
             { question: "Quais músculos ajudam no processo de respiração?", options: ["Diafragma e intercostais", "Bíceps", "Glúteos", "Quadríceps"], answer: 0 }
         ];
-        
+
         let currentQuestionIndex = 0;
         let score = 0;
         let userAnswers = [];
-        
+        let musicPlaying = false;
+
+        // Função para iniciar o quiz
         function startQuiz() {
             score = 0;
             currentQuestionIndex = 0;
             userAnswers = [];
             showQuestion();
         }
-        
+
+        // Função para exibir a próxima questão
         function showQuestion() {
             const questionElement = document.createElement('div');
             questionElement.classList.add('question-container');
@@ -152,7 +169,8 @@
             document.getElementById('quiz-container').innerHTML = '';
             document.getElementById('quiz-container').appendChild(questionElement);
         }
-        
+
+        // Função para verificar a resposta do usuário
         function checkAnswer(selectedIndex) {
             userAnswers.push({
                 question: questions[currentQuestionIndex].question,
@@ -160,7 +178,7 @@
                 correctAnswer: questions[currentQuestionIndex].options[questions[currentQuestionIndex].answer],
                 correct: selectedIndex === questions[currentQuestionIndex].answer
             });
-            
+
             if (selectedIndex === questions[currentQuestionIndex].answer) {
                 score++;
             }
@@ -171,7 +189,8 @@
                 showResults();
             }
         }
-        
+
+        // Função para exibir os resultados
         function showResults() {
             let resultHtml = `<div class="result-container"><h2>Você acertou ${score} de ${questions.length} perguntas!</h2>`;
             resultHtml += '<button onclick="startQuiz()">Refazer Quiz</button>';
@@ -181,6 +200,22 @@
             });
             resultHtml += '</ul></div>';
             document.getElementById('quiz-container').innerHTML = resultHtml;
+        }
+
+        // Função para ativar/desativar a música
+        function toggleMusic() {
+            const musicButton = document.getElementById('music-button');
+            const backgroundMusic = document.getElementById('background-music');
+            
+            if (musicPlaying) {
+                backgroundMusic.pause();
+                musicButton.innerText = "Ativar Música de Fundo";
+            } else {
+                backgroundMusic.play();
+                musicButton.innerText = "Desativar Música de Fundo";
+            }
+
+            musicPlaying = !musicPlaying;
         }
     </script>
 </body>
